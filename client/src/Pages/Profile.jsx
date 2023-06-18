@@ -15,9 +15,7 @@ const Profile = () => {
   const {setCurrentUser} = useContext(AuthContext);
 
   useEffect(()=>{
-    const token=localStorage.getItem('accessToken')
-      console.log('hi')
-      axios.get('http://localhost:5000/api/auth/verify',{headers:{"token":"Bearer "+localStorage.getItem('accessToken')}}).then((res)=>{
+      axios.get('https://xf6n4h-5000.csb.app/api/auth/verify',{headers:{"token":"Bearer "+localStorage.getItem('accessToken')}}).then((res)=>{
       
       console.log(res.data)
     }).catch((err)=>{

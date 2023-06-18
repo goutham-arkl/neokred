@@ -10,7 +10,7 @@ import axios from 'axios'
 
 
 const instance=axios.create({
-    baseURL:"http://localhost:5000/api/auth",
+    baseURL:"https://xf6n4h-5000.csb.app/api/auth",
     headers:header,
     withCredentials:true
 })
