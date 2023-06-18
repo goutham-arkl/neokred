@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import {  useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import axios from "../axios";
 import { Country, State, City } from "country-state-city";
@@ -101,8 +101,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState(0);
+  const [phone, setPhone] = useState('');
   const [answer, setAnswer] = useState("");
   const [address, setaddress] = useState("");
   const [country, setCountry] = useState("");
@@ -116,6 +115,8 @@ const SignUp = () => {
   const [countryCode, setCountryCode] = useState("");
   const [stateCode, setStateCode] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate=useNavigate()
 
   const handlePassword = (e) => {
     const numberRegex = /[0-9]/;
@@ -136,11 +137,12 @@ const SignUp = () => {
 
   const handlePhone = (e) => {
     setPhone(e.target.value);
-    if (phone.toString().length < 10 || phone.toString().length > 10) {
-      setPhoneErr(true);
-    } else {
+    if (phone.toString().length !== 9 || isNaN(Number(phone)) === true ) {
+      return setPhoneErr(true);
+    } 
+
       setPhoneErr(false);
-    }
+    
   };
   const handlezipCode = (e) => {
     setCode(e.target.value);
@@ -184,7 +186,7 @@ const SignUp = () => {
       axios
         .post("/register", user, { withCredentials: true })
         .then((res) => {
-          console.log(res.data);
+          navigate('/')
         })
         .catch((err) => {
           Swal.fire({
@@ -218,15 +220,16 @@ const SignUp = () => {
         </InputLabelContainer>
         <InputLabelContainer>
           <Label>Password</Label>
-          {passwordErr && <Err>Password must be atleast 8 charcters</Err>}
-          <GeneralInput
+          {passwordErr && <Err>Password must be atleast 8 charcters and must include one special chatcter and a number </Err>}
+          <GeneralInput type="password"
             onChange={(e) => {
               handlePassword(e);
             }}
           />
         </InputLabelContainer>
         <InputLabelContainer>
-          <Label>Phone Number</Label>
+        <Label>Phone Number</Label>
+        {phoneErr && <Err>Phone number must be 10 digits and number</Err>}
           <GeneralInput
             onChange={(e) => {
               handlePhone(e);
