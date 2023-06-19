@@ -59,7 +59,7 @@ const Navbar = () => {
       <Logo src={logo} />
       <RightContent>
         <Admin>{currentUser.name}</Admin> <br></br>
-        <span onClick={() => handleLogout()}>Logout</span>
+        <span style={{cursor:"pointer"}} onClick={() => handleLogout()}>Logout</span>
       </RightContent>
     </Container>
   );
